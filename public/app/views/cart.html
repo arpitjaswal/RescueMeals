@@ -1,32 +1,4 @@
 
-
-<!-- Add your Razorpay API key -->
-<script>
-  const razorpayKey = 'rzp_test_RHn1nKke9vOAj3';
-
-  // Initialize the payment process
-  function initiateRazorpayPayment() {
-    var options = {
-      key: "rzp_test_RHn1nKke9vOAj3",
-      amount: 10000, // Amount in paise (e.g., 1000 paise = ₹10)
-      currency: 'INR',
-      name: 'RescueMeals',
-      description: 'Payment for Food items',
-      handler: function (response) {
-        // This function will be called after successful payment
-        console.log('Payment successful!', response);
-        // You can perform additional actions here, such as showing a success message, updating the order status, etc.
-      },
-      prefill: {
-        email: 'customer@example.com',
-        contact: '1234567890',
-      },
-    };
-
-    var razorpayInstance = new Razorpay(options);
-    razorpayInstance.open();
-  }
-</script>
 <div class="text-center" ng-show="cart.value > 0">
     <h1 >
         Cart
