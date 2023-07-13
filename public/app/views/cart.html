@@ -1,3 +1,32 @@
+
+
+<!-- Add your Razorpay API key -->
+<script>
+  const razorpayKey = 'rzp_test_RHn1nKke9vOAj3';
+
+  // Initialize the payment process
+  function initiateRazorpayPayment() {
+    var options = {
+      key: "rzp_test_RHn1nKke9vOAj3",
+      amount: 10000, // Amount in paise (e.g., 1000 paise = ₹10)
+      currency: 'INR',
+      name: 'RescueMeals',
+      description: 'Payment for Food items',
+      handler: function (response) {
+        // This function will be called after successful payment
+        console.log('Payment successful!', response);
+        // You can perform additional actions here, such as showing a success message, updating the order status, etc.
+      },
+      prefill: {
+        email: 'customer@example.com',
+        contact: '1234567890',
+      },
+    };
+
+    var razorpayInstance = new Razorpay(options);
+    razorpayInstance.open();
+  }
+</script>
 <div class="text-center" ng-show="cart.value > 0">
     <h1 >
         Cart
@@ -60,21 +89,15 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title" style="margin-bottom: 0px;">Choose a Payment Method</h4>
+                                    <h4 class="modal-title" style="margin-bottom: 0px;">Choose a Payment Gateway:</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div class="radio">
-                                        <label><input type="radio" name="optradio" value="Paytm" ng-model="cart.option">Paytm</label>
-                                    </div>
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio" value="UPI" ng-model="cart.option">UPI</label>
-                                    </div>
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio" value="COD" ng-model="cart.option">Cash On Delivery</label>
+                                        <label><input type="radio" name="optradio" value="RazorPay" ng-model="cart.option">Razorpay</label>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Pay Now</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="initiateRazorpayPayment()" style="margin-right: 250px; width: 500px;">PAY NOW</button>
                                 </div>
                             </div>
 

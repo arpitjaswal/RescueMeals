@@ -12,6 +12,33 @@
 
     <script src="app/routes.js"></script>
     <script src="app/app.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    const razorpayKey = 'rzp_test_RHn1nKke9vOAj3';
+
+    // Initialize the payment process
+    function initiateRazorpayPayment() {
+      var options = {
+        key: razorpayKey,
+        amount: 10000, // Amount in paise (e.g., 1000 paise = ₹10)
+        currency: 'INR',
+        name: 'Your Company Name',
+        description: 'Payment for Product/Service',
+        handler: function (response) {
+          // This function will be called after successful payment
+          console.log('Payment successful!', response);
+          // You can perform additional actions here, such as showing a success message, updating the order status, etc.
+        },
+        prefill: {
+          email: 'customer@example.com',
+          contact: '1234567890',
+        },
+      };
+
+      var razorpayInstance = new Razorpay(options);
+      razorpayInstance.open();
+    }
+  </script>
 
     <script src="app/controllers/userCtrl.js"></script>
     <script src="app/controllers/mainCtrl.js"></script>
@@ -224,6 +251,7 @@
     <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/main.js"></script>
+
 
 </body>
 </html>

@@ -108,6 +108,7 @@ angular.module('userServices',[])
     userFactory.clearcart = function () {
         return $http.post('/api/clearcart');
     };
+    
 
     return userFactory;
 });
