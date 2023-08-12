@@ -1,6 +1,16 @@
 # RescueMeals
 
-Welcome to RescueMeals, a revolutionary food waste management system aimed at tackling the critical issue of food wastage by empowering a collaborative platform for restaurants, NGOs, and volunteers.
+Welcome to RescueMeals, a revolutionary food waste management system aimed at tackling the critical issue of food wastage by empowering a collaborative platform for restaurants, NGOs, and volunteers. This project uses the power of MERN (MongoDB, Express.js, React.js, Node.js) stack to create an impactful solution that transforms surplus food into a resource for those in need.
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Getting Started](#getting-started)
+- [Video Demonstration](#video-demonstration)
+- [Razorpay Integration](#razorpay-integration)
+- [Authors](#authors)
+- [License](#license)
 
 ## Introduction
 
@@ -14,12 +24,14 @@ RescueMeals not only tackles the pressing issue of food wastage but also harness
 - **User-Friendly Interfaces**: Intuitive interfaces make it easy for donators, receivers, and volunteers to navigate the system and make meaningful contributions.
 
 ## Features
-- **Donator Portal**: Restaurants can post details of surplus raw and cooked food, contributing to the fight against food wastage.
-- **NGO and Volunteer Dashboard**: NGOs and volunteers can explore and accept food donation requests, enabling efficient distribution.
-- **Secure User Authentication**: JSON Web Tokens (JWT) ensure secure access to the system and role-based privileges.
-- **Real-Time Updates**: Beneficiaries receive real-time updates about accepted donation requests, ensuring transparency.
-- **Integrated Payment Gateway**: RescueMeals integrates with Razorpay for secure online payments, enhancing the overall experience.
-- **User-Centric Design**: The platform's design prioritizes usability, making it easy for all users to contribute effectively.
+- Donators (Restaurants) can post details of surplus raw and cooked food.
+- Volunteers can view and accept donation requests.
+- Users can add food items to their cart for easy management.
+- Secure user authentication and role-based access control.
+- Intuitive user interfaces for donators, receivers, and volunteers.
+- Real-time updates on accepted donation requests.
+- Easy-to-use product management and browsing.
+- Integration with Razorpay for secure online payments.
 
 ## Technology Stack
 - **Frontend**: React.js
@@ -32,16 +44,22 @@ RescueMeals not only tackles the pressing issue of food wastage but also harness
 - **Deployment**: Heroku for backend, Vercel for frontend
 
 ## Getting Started
-1. Clone the repository: `git clone https://github.com/yourusername/RescueMeals.git`
+1. Clone the repository: `git clone https://github.com/arpitjaswal/RescueMeals.git`
 2. Navigate to the project folder: `cd RescueMeals`
-3. Install backend dependencies: `npm install`
-4. Navigate to the `client` folder: `cd client`
-5. Install frontend dependencies: `npm install`
-6. Run the backend server: `npm start` (in the project root)
-7. Run the frontend development server: `npm start` (in the `client` folder)
+3. Install dependencies: `npm install`
+4. Run the server: `npm start` (in the project root)
+
+## Video Demonstration
+
+[RescueMeals Video Demonstration link.](https://youtu.be/odrisBjAnTo)
 
 ## Razorpay Integration
 To enable online payments through RescueMeals using Razorpay:
 1. Sign up for a Razorpay account: [https://razorpay.com](https://razorpay.com)
-2. Obtain your Razorpay API key and secret key.
-3. Add your API key and secret key to the `.env` file in the backend directory:
+
+## Authors
+
+- [@arpitjaswal](https://www.github.com/arpitjaswal)
+
+## License
+This project is licensed under the [MIT License](LICENSE).
