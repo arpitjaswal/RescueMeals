@@ -1,6 +1,9 @@
 # RescueMeals
 
 Welcome to RescueMeals, a revolutionary food waste management system aimed at tackling the critical issue of food wastage by empowering a collaborative platform for restaurants, NGOs, and volunteers. This project uses the power of MERN (MongoDB, Express.js, React.js, Node.js) stack to create an impactful solution that transforms surplus food into a resource for those in need.
+
+## RescueMeals
+Link for the web-app : [RescueMeals Link.](https://rescuemeals.onrender.com/)
 ## Table of Contents
 
 - [Introduction](#introduction)
