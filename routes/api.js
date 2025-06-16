@@ -5,6 +5,7 @@ var Product     = require('../models/product.js');
 var jwt         = require('jsonwebtoken');
 var nodemailer  = require('nodemailer');
 var secret      = 'Pankaj';
+var geocoding   = require('../utils/geocoding.js');
 
 var transporter = nodemailer.createTransport({
     service : 'gmail',
@@ -562,7 +563,7 @@ module.exports = function(router){
 
 
     // route to post data of donating raw food
-    router.post('/donaterawfood',function (req,res) {
+    router.post('/donaterawfood', function (req,res) {
 
         var food = new Rawitems();
         food.name = req.body.name;
@@ -570,6 +571,21 @@ module.exports = function(router){
         food.city = req.body.city;
         food.state = req.body.state;
         food.postedby = req.decoded.username;
+        
+        // Add unit if provided
+        if (req.body.unit) {
+            food.unit = req.body.unit;
+        }
+        
+        // Add expiry date if provided
+        if (req.body.expiryDate) {
+            food.expiryDate = new Date(req.body.expiryDate);
+        }
+        
+        // Add address if provided
+        if (req.body.address) {
+            food.address = req.body.address;
+        }
 
         if(req.body.name == null || req.body.quantity == null || req.body.city == null || req.body.state == null || req.body.name == "" || req.body.quantity == "" || req.body.city == "" || req.body.state == "" )
         {
@@ -577,14 +593,48 @@ module.exports = function(router){
             res.json({ success:false , message:'Make sure all fields are provided'});
         }
         else {
-            food.save(function(err) {
-                if(err) {
-                    res.json({success:false,message:'Error in saving the data to the database'});
-                }
-                else {
-                    res.json({ success:true , message:'Donate request successfully posted. We will contact you soon'});
-                }
-            });
+            // Try to geocode the address
+            const addressToGeocode = food.address || `${food.city}, ${food.state}`;
+            
+            geocoding.geocodeAddress(food.address, food.city, food.state)
+                .then(locationData => {
+                    // Add location data to the food item
+                    food.location = {
+                        latitude: locationData.latitude,
+                        longitude: locationData.longitude
+                    };
+                    
+                    // If address wasn't provided but we got a formatted one from geocoding
+                    if (!food.address && locationData.formattedAddress) {
+                        food.address = locationData.formattedAddress;
+                    }
+                    
+                    // Save the food item with location data
+                    return food.save();
+                })
+                .then(() => {
+                    res.json({ 
+                        success: true, 
+                        message: 'Donate request successfully posted with location data. We will contact you soon'
+                    });
+                })
+                .catch(err => {
+                    // If geocoding fails, still save the food item without location data
+                    food.save(function(err) {
+                        if(err) {
+                            res.json({
+                                success: false,
+                                message: 'Error in saving the data to the database: ' + err.message
+                            });
+                        }
+                        else {
+                            res.json({ 
+                                success: true, 
+                                message: 'Donate request successfully posted. We will contact you soon'
+                            });
+                        }
+                    });
+                });
         }
     });
 
@@ -605,17 +655,56 @@ module.exports = function(router){
             cookedfood.city = req.body.city;
             cookedfood.state = req.body.state;
             cookedfood.postedby = req.decoded.username;
-
-            cookedfood.save(function (err) {
-                if(err) {
-                    throw err;
-                } else {
+            
+            // Add expiry date if provided
+            if (req.body.expiryDate) {
+                cookedfood.expiryDate = new Date(req.body.expiryDate);
+            }
+            
+            // Add address if provided
+            if (req.body.address) {
+                cookedfood.address = req.body.address;
+            }
+            
+            // Try to geocode the address
+            geocoding.geocodeAddress(cookedfood.address, cookedfood.city, cookedfood.state)
+                .then(locationData => {
+                    // Add location data to the food item
+                    cookedfood.location = {
+                        latitude: locationData.latitude,
+                        longitude: locationData.longitude
+                    };
+                    
+                    // If address wasn't provided but we got a formatted one from geocoding
+                    if (!cookedfood.address && locationData.formattedAddress) {
+                        cookedfood.address = locationData.formattedAddress;
+                    }
+                    
+                    // Save the food item with location data
+                    return cookedfood.save();
+                })
+                .then(() => {
                     res.json({
-                        success : true,
-                        message : 'Donate Request successfully posted.'
+                        success: true,
+                        message: 'Donate Request successfully posted with location data.'
                     });
-                }
-            })
+                })
+                .catch(err => {
+                    // If geocoding fails, still save the food item without location data
+                    cookedfood.save(function(err) {
+                        if(err) {
+                            res.json({
+                                success: false,
+                                message: 'Error in saving the data to the database: ' + err.message
+                            });
+                        } else {
+                            res.json({
+                                success: true,
+                                message: 'Donate Request successfully posted.'
+                            });
+                        }
+                    });
+                });
         }
     });
 
